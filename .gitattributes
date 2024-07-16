@@ -1,0 +1,9 @@
+# Ajustes de finales de línea
+* text=auto
+
+# Para los archivos que deben tener finales de línea LF
+*.sh text eol=lf
+*.py text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.js text eol=lf

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    {% if messages %}
+    <div class="container mx-auto mt-5">
+        {% for message in messages %}
+        <div class="alert {{ message.tags }} mb-4 p-4 rounded-lg text-center">
+            {{ message }}
+        </div>
+    {% endfor %}
+    </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+    {% block extra_js %}
+    <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                alert.style.transition = 'opacity 1s';
+                alert.style.opacity = '0';
+                setTimeout(() => {
+                    alert.remove();
+                }, 1000);
+            }, 3000);
+        });
+    });
+    </script>
+    {% endblock %}
+</body>
+</html>

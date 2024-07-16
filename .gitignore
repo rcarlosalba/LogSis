@@ -1,0 +1,27 @@
+# Python
+*.pyc
+__pycache__/
+
+# Django
+*.sqlite3
+*.log
+*.pot
+*.mo
+*.pyc
+*.pyo
+*.pyd
+*.db
+media/
+staticfiles/
+
+# Environments
+.env
+
+# VS Code
+.vscode/
+
+# CSS 
+/tailwindcss
+
+# venv 
+/venv
