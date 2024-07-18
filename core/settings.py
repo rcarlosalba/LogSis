@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     # third party apps
     'django_browser_reload',
     # my apps
-    'accounts'
+    'accounts',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -148,7 +149,7 @@ else:
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # LOGIN LOGOUT URLS
-LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_REDIRECT_URL = '/accounts/dashboard/'
 LOGOUT_REDIRECT_URL = 'login'
 
 # Tag Stiles
@@ -170,3 +171,7 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = '2525'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+# Custom User Model
+AUTH_USER_MODEL = 'users.CustomUser'

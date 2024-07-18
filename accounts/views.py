@@ -46,4 +46,10 @@ def logout_view(request):
 
 @login_required
 def dashboard_view(request):
-    return render(request, 'dashboard/index.html')
+    user_type = request.user.user_type
+    if user_type in ['owner', 'admin']:
+        return render(request, 'dashboard/admin_dashboard.html')
+    elif user_type == 'seller':
+        return render(request, 'dashboard/seller_dashboard.html')
+    else:  # customer
+        return render(request, 'dashboard/customer_dashboard.html')

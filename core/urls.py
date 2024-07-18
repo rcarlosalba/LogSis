@@ -23,6 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # accounts app
     path('accounts/', include('accounts.urls')),
+    # users app
+    path('users/', include('users.urls')),
     # browser reload
     path('__reload__/', include('django_browser_reload.urls'))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
