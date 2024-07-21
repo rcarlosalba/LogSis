@@ -1,0 +1,23 @@
+<!-- inventory/templates/inventory/product_detail.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="bg-white shadow-md rounded-lg overflow-hidden max-w-2xl mx-auto">
+    <div class="p-6">
+        <h1 class="text-3xl font-bold mb-4">{{ product.name }}</h1>
+        <p class="text-gray-600 mb-4">{{ product.description }}</p>
+        <p class="text-2xl font-bold text-green-600 mb-4">$ {{ product.price }}</p>
+        <p class="mb-2"><strong>Categoría:</strong> {{ product.get_category_display }}</p>
+        <p class="mb-2"><strong>SKU:</strong> {{ product.sku }}</p>
+        <p class="mb-4"><strong>Disponibles:</strong> {{ product.quantity }}</p>
+        
+        {% if user.is_authenticated and user.user_type in 'owner,admin,seller' %}
+        <div class="mt-6">
+            <a href="{% url 'inventory:product_update' product.pk %}" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 mr-2">Editar</a>
+            <a href="{% url 'inventory:product_delete' product.pk %}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Eliminar</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

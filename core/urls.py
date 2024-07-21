@@ -18,13 +18,23 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from inventory import error_views
+from inventory.views import HomeView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # home view
+    path('', HomeView.as_view(), name='home'),
     # accounts app
     path('accounts/', include('accounts.urls')),
     # users app
     path('users/', include('users.urls')),
+    # inventory app
+    path('inventory/', include('inventory.urls')),
     # browser reload
     path('__reload__/', include('django_browser_reload.urls'))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# Error views
+handler403 = error_views.error_403
+handler404 = error_views.error_404
