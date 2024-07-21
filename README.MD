@@ -55,34 +55,7 @@ El proyecto está organizado en varias aplicaciones Django, cada una con un prop
 - Sistema de Inventario: Gestión básica de productos con operaciones CRUD.
 
 ## Mapa de URLs
-/ (HomeView) - name: 'home'
-|
-├── admin/
-|
-├── accounts/
-|   ├── login/ - name: 'login'
-|   ├── logout/ - name: 'logout'
-|   ├── password_change/ - name: 'password_change'
-|   ├── password_change/done/ - name: 'password_change_done'
-|   ├── password_reset/ - name: 'password_reset'
-|   ├── password_reset/done/ - name: 'password_reset_done'
-|   ├── reset/<uidb64>/<token>/ - name: 'password_reset_confirm'
-|   ├── reset/done/ - name: 'password_reset_complete'
-|   └── dashboard/ - name: 'dashboard'
-|
-├── users/
-|   ├── signup/ - name: 'signup'
-|   ├── admin-dashboard/ - name: 'admin-dashboard'
-|   ├── seller-dashboard/ - name: 'seller-dashboard'
-|   └── customer-dashboard/ - name: 'customer-dashboard'
-|
-└── inventory/
-    ├── (HomeView) - name: 'home'
-    ├── products/ - name: 'product_list'
-    ├── products/<int:pk>/ - name: 'product_detail'
-    ├── products/create/ - name: 'product_create'
-    ├── products/update/<int:pk>/ - name: 'product_update'
-    └── products/delete/<int:pk>/ - name: 'product_delete'
+![Mapa de URLs](./urlmap.jpg)
 
 ## Licencia
 Este proyecto está licenciado bajo la [MIT License](https://opensource.org/license/mit).
