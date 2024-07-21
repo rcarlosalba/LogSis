@@ -1,13 +1,31 @@
-<!-- En el template del dashboard del administrador -->
+{% extends "base.html" %}
 
-<div class="mb-6">
-    <h2 class="text-2xl font-bold mb-4">Acciones de Inventario</h2>
-    <div class="space-x-4">
-        <a href="{% url 'inventory:product_list' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Ver Inventario
-        </a>
-        <a href="{% url 'inventory:product_create' %}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-            Añadir Producto
-        </a>
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-10">
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-700">Welcome, {{ request.user.username }}</h1>
+            <a href="{% url 'logout' %}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Logout
+            </a>
+        </div>
+        
+        <!-- Contenido del dashboard -->
+        <div class="mt-6">
+            <h2 class="text-xl font-semibold text-gray-600 mb-4">Your Seller Dashboard Content</h2>
+            <!-- Aquí puedes agregar más contenido del dashboard -->
+            <a href="{% url 'inventory:product_list' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Ver Inventario
+            </a>
+            <a href="{% url 'inventory:product_create' %}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                Añadir Producto
+            </a>
+            <p class="text-gray-600">
+                
+            </p>
+        </div>
     </div>
 </div>
+{% endblock %}
