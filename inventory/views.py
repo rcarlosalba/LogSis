@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from .models import Product
 from .forms import ProductForm
+from django.core.paginator import Paginator
 
 
 class StaffRequiredMixin(UserPassesTestMixin):
@@ -22,10 +23,14 @@ class HomeView(ListView):
     context_object_name = 'products'
 
 
-class ProductListView(LoginRequiredMixin, ListView):
+class ProductListView(ListView):
     model = Product
     template_name = 'inventory/product_list.html'
     context_object_name = 'products'
+    paginate_by = 12  # Número de productos por página
+
+    def get_queryset(self):
+        return Product.objects.order_by('-created_at')
 
 
 class ProductDetailView(DetailView):
@@ -43,6 +48,10 @@ class ProductCreateView(LoginRequiredMixin, StaffRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         form.instance.last_modified_by = self.request.user
+        if form.cleaned_data.get('imagen'):
+            form.instance.imagen_url = ''  # Limpiar la URL si se sube una imagen
+        elif form.cleaned_data.get('imagen_url'):
+            form.instance.imagen = None  # Limpiar la imagen si se proporciona una URL
         return super().form_valid(form)
 
 
@@ -54,6 +63,10 @@ class ProductUpdateView(LoginRequiredMixin, StaffRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         form.instance.last_modified_by = self.request.user
+        if form.cleaned_data.get('imagen'):
+            form.instance.imagen_url = ''  # Limpiar la URL si se sube una imagen
+        elif form.cleaned_data.get('imagen_url'):
+            form.instance.imagen = None  # Limpiar la imagen si se proporciona una URL
         return super().form_valid(form)
 
 

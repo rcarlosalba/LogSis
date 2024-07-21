@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'accounts',
     'users',
     'inventory',
+    # django Seed
+    'django_seed',
 ]
 
 MIDDLEWARE = [

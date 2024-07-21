@@ -1,19 +1,23 @@
 <!-- inventory/templates/inventory/product_form.html -->
-
 {% extends 'base.html' %}
-
 {% block content %}
 <div class="container mx-auto px-4">
     <h1 class="text-3xl font-bold mb-6">{% if form.instance.pk %}Editar{% else %}Crear{% endif %} Producto</h1>
-    
-    <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+   
+    <form method="post" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         {% csrf_token %}
         {% for field in form %}
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ field.id_for_label }}">
                 {{ field.label }}
             </label>
-            {{ field }}
+            {% if field.name == 'imagen' %}
+                <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" 
+                       id="{{ field.id_for_label }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                       {% if field.field.required %}required{% endif %}>
+            {% else %}
+                {{ field }}
+            {% endif %}
             {% if field.errors %}
             <p class="text-red-500 text-xs italic">{{ field.errors.0 }}</p>
             {% endif %}

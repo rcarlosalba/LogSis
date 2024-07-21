@@ -16,6 +16,7 @@
                 <th class="py-3 px-6 text-left">Nombre</th>
                 <th class="py-3 px-6 text-left">Categoría</th>
                 <th class="py-3 px-6 text-center">Precio</th>
+                <th class="py-3 px-6 text-center">Imagen</th>
                 <th class="py-3 px-6 text-center">Cantidad</th>
                 <th class="py-3 px-6 text-center">Acciones</th>
             </tr>
@@ -33,6 +34,19 @@
                 </td>
                 <td class="py-3 px-6 text-center">
                     <span>${{ product.price }}</span>
+                </td>
+                <td class="py-3 px-6 text-center">
+                    <div class="w-20 h-20 overflow-hidden">
+                        {% if product.imagen %}
+                            <img src="{{ product.imagen.url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
+                        {% elif product.imagen_url %}
+                            <img src="{{ product.imagen_url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
+                        {% else %}
+                            <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                                <span class="text-gray-500 text-xs">Sin imagen</span>
+                            </div>
+                        {% endif %}
+                    </div>
                 </td>
                 <td class="py-3 px-6 text-center">
                     <span>{{ product.quantity }}</span>
@@ -63,5 +77,25 @@
             {% endfor %}
         </tbody>
     </table>
+    <!-- Añade esto al final de tu plantilla, justo antes del cierre del div container -->
+    {% if is_paginated %}
+    <div class="mt-6">
+        <nav class="flex items-center justify-between">
+            <div>
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}" class="px-3 py-2 bg-gray-200 text-gray-700 rounded-md">Anterior</a>
+                {% endif %}
+            </div>
+            <div class="text-gray-600">
+                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+            </div>
+            <div>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="px-3 py-2 bg-gray-200 text-gray-700 rounded-md">Siguiente</a>
+                {% endif %}
+            </div>
+        </nav>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

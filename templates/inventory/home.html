@@ -1,13 +1,21 @@
 <!-- inventory/templates/inventory/home.html -->
-
 {% extends 'base.html' %}
-
 {% block content %}
 <h1 class="text-3xl font-bold mb-6">Nuestros Productos</h1>
-
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
     {% for product in products %}
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="h-48 overflow-hidden">
+            {% if product.imagen %}
+                <img src="{{ product.imagen.url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
+            {% elif product.imagen_url %}
+                <img src="{{ product.imagen_url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
+            {% else %}
+                <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                    <span class="text-gray-500">Sin imagen</span>
+                </div>
+            {% endif %}
+        </div>
         <div class="p-4">
             <h2 class="text-xl font-semibold mb-2">{{ product.name }}</h2>
             <p class="text-gray-600 mb-2">{{ product.description|truncatewords:20 }}</p>
