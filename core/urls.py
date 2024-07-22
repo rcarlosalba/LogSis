@@ -25,8 +25,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # home view
     path('', HomeView.as_view(), name='home'),
-    # accounts app
-    path('accounts/', include('accounts.urls')),
     # users app
     path('users/', include('users.urls')),
     # inventory app

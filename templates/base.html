@@ -8,32 +8,40 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
+    <!-- Nav -->
+    {% include 'includes/nav_menu.html' %}
+    <!-- Alert -->
     {% if messages %}
-    <div class="container mx-auto mt-5">
-        {% for message in messages %}
-        <div class="alert {{ message.tags }} mb-4 p-4 rounded-lg text-center">
-            {{ message }}
+        <div class="container mx-auto mt-5">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }} mb-4 p-4 rounded-lg text-center">
+                    {{ message }}
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
-    </div>
     {% endif %}
+    <!-- Content -->
     <div class="container mx-auto mt-5">
         {% block content %}{% endblock %}
     </div>
+    <!-- Footer -->
+
+    <!-- JS -->
     {% block extra_js %}
+    <script src="{% static 'js/menu.js' %}"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        const alerts = document.querySelectorAll('.alert');
-        alerts.forEach(alert => {
-            setTimeout(() => {
-                alert.style.transition = 'opacity 1s';
-                alert.style.opacity = '0';
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
                 setTimeout(() => {
-                    alert.remove();
-                }, 1000);
-            }, 3000);
+                    alert.style.transition = 'opacity 1s';
+                    alert.style.opacity = '0';
+                    setTimeout(() => {
+                        alert.remove();
+                    }, 1000);
+                }, 3000);
+            });
         });
-    });
     </script>
     {% endblock %}
 </body>

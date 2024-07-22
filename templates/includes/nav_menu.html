@@ -1,0 +1,97 @@
+<!-- templates/includes/menu.html -->
+{% load static %}
+<nav class="bg-gray-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <div class="flex-shrink-0">
+        <img class="h-8 w-auto" src="{% static 'path/to/your/logo.png' %}" alt="Logo">
+      </div>
+      
+      <!-- Menu para pantallas medianas y grandes -->
+      <div class="hidden md:block">
+        <div class="ml-10 flex items-baseline space-x-4">
+          {% if user.is_authenticated %}
+            <a href="{% url 'home' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Inicio</a>
+            
+            {% if user.is_superuser %}
+              <a href="{% url 'home' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Admin</a>
+            {% endif %}
+            
+            {% if user.user_type == 'owner' or user.user_type == 'admin' %}
+              <a href="{% url 'admin-dashboard' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+            {% endif %}
+            
+            {% if user.user_type == 'owner' or user.user_type == 'admin' or user.user_type == 'seller' %}
+              <a href="{% url 'inventory:product_list' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Inventario</a>
+            {% endif %}
+
+            {% if user.user_type == 'owner' or user.user_type == 'admin' or user.user_type == 'seller' %}
+              <a href="{% url 'inventory:product_create' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Añadir Producto</a>
+            {% endif %}
+            
+            {% if user.user_type == 'customer' %}
+              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Mis Pedidos</a>
+            {% endif %}
+            
+            <a href="" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Perfil</a>
+            <a href="{% url 'logout' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Cerrar Sesión</a>
+          {% else %}
+            <a href="{% url 'login' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Iniciar Sesión</a>
+            <a href="{% url 'signup' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Registrarse</a>
+          {% endif %}
+        </div>
+      </div>
+      
+      <!-- Botón de menú para móviles -->
+      <div class="md:hidden">
+        <button type="button" class="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+          <span class="sr-only">Abrir menú principal</span>
+          <!-- Icono de menú -->
+          <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <!-- Icono de X -->
+          <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menú móvil -->
+  <div class="hidden md:hidden" id="mobile-menu">
+    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+      {% if user.is_authenticated %}
+        <a href="{% url 'home' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Inicio</a>
+        
+        {% if user.is_superuser %}
+          <a href="{% url 'admin:index' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Admin</a>
+        {% endif %}
+        
+        {% if user.user_type == 'owner' or user.user_type == 'admin' %}
+          <a href="{% url 'admin-dashboard' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Dashboard</a>
+        {% endif %}
+        
+        {% if user.user_type == 'owner' or user.user_type == 'admin' or user.user_type == 'seller' %}
+          <a href="{% url 'inventory:product_list' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Inventario</a>
+        {% endif %}
+
+        {% if user.user_type == 'owner' or user.user_type == 'admin' or user.user_type == 'seller' %}
+          <a href="{% url 'inventory:product_create' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Añadir Producto</a>
+        {% endif %}
+        
+        {% if user.user_type == 'customer' %}
+          <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Mis Pedidos</a>
+        {% endif %}
+        
+        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Perfil</a>
+        <a href="{% url 'logout' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Cerrar Sesión</a>
+      {% else %}
+        <a href="{% url 'login' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Iniciar Sesión</a>
+        <a href="{% url 'signup' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Registrarse</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>

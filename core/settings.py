@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     # third party apps
     'django_browser_reload',
     # my apps
-    'accounts',
     'users',
     'inventory',
     # django Seed
@@ -152,9 +151,8 @@ else:
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # LOGIN LOGOUT URLS
-LOGIN_REDIRECT_URL = '/accounts/dashboard/'
+LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'login'
-
 # Tag Stiles
 
 MESSAGE_TAGS = {
@@ -178,3 +176,8 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # Custom User Model
 AUTH_USER_MODEL = 'users.CustomUser'
+
+AUTHENTICATION_BACKENDS = [
+    'users.backends.CustomBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
