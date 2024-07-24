@@ -10,6 +10,7 @@ LOGSIS es un sistema de login o acceso a usuarios construido con Django 4.2.13. 
 3. [Estructura del Proyecto](#estructura-del-proyecto)
 4. [Características](#características)
 5. [Mapa de URLs](#mapa-de-urls)
+6. [Lecciones Aprendidas](#lecciones-aprendidas)
 
 ## Instalación
 Sigue estos pasos para instalar y configurar el proyecto:
@@ -27,10 +28,10 @@ pip install -r requirements.txt
 
 4. Configura las variables de entorno en un archivo .env en la raíz del proyecto:
 
-SECRET_KEY=your_secret_key
-DEBUG=True
-EMAIL_HOST_USER=your_mailtrap_username
-EMAIL_HOST_PASSWORD=your_mailtrap_password
+- SECRET_KEY=your_secret_key
+- DEBUG=True
+- EMAIL_HOST_USER=your_mailtrap_username
+- EMAIL_HOST_PASSWORD=your_mailtrap_password
 
 5. Ejecuta las migraciones de la base de datos:
 python manage.py migrate
@@ -42,9 +43,9 @@ python manage.py runserver
 El proyecto está organizado en varias aplicaciones Django, cada una con un propósito específico:
 
 - core: Aplicación principal que maneja la configuración del proyecto y la vista de inicio.
-- accounts: Gestiona la autenticación de usuarios, incluyendo login, logout, cambio de contraseña y restablecimiento de contraseña.
-- users: Maneja el registro de usuarios y los dashboards específicos para diferentes tipos de usuarios (admin, vendedor, cliente).
+- users: Gestiona la autenticación de usuarios, registro, login, logout, cambio de contraseña, restablecimiento de contraseña y los dashboards específicos para diferentes tipos de usuarios (admin, vendedor, cliente).
 - inventory: Gestiona el sistema de inventario, incluyendo la creación, visualización, actualización y eliminación de productos.
+- orders: Maneja el carrito de compras y el proceso de checkout para los pedidos de los clientes.
 
 ## Características
 - Django: Sistema de login con acceso a un dashboard.
@@ -56,6 +57,11 @@ El proyecto está organizado en varias aplicaciones Django, cada una con un prop
 
 ## Mapa de URLs
 ![Mapa de URLs](./urlmap.jpg)
+
+## Lecciones Aprendidas
+Había creado proyectos mucho más básicos, pero implementar un sistema de login, de inventario y un carrito de compras superó mis expectativas. Descubrí que la mayor parte de la lógica reside en las vistas y los modelos. Los templates son más bien un reflejo visual de lo trabajado en las vistas.
+
+Aunque aún me queda mucho por aprender sobre Python y Django, estoy convencido de que aprender con el apoyo de la inteligencia artificial nos ayuda a potenciar nuestro conocimiento. En varias ocasiones me encontraba atascado con implementaciones de código que no sabía cómo abordar. Pedí ayuda a la IA, pero al principio no comprendía el código generado. Así que decidí preguntar línea por línea, importación por importación. Aprendí que la IA no nos quitará el trabajo; es una herramienta poderosa que, cuando se usa adecuadamente, puede llevar nuestro aprendizaje a un nivel superior.
 
 ## Licencia
 Este proyecto está licenciado bajo la [MIT License](https://opensource.org/license/mit).
