@@ -2,7 +2,7 @@
 
 from django.db import models
 from django.conf import settings
-from .constants import PRODUCT_CATEGORIES, ORDER_STATUS
+from .constants import PRODUCT_CATEGORIES
 from PIL import Image
 import io
 from django.core.files.base import ContentFile

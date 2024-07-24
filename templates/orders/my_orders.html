@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-4">
+    <h1 class="text-3xl font-bold mb-6">Mis Pedidos</h1>
+
+    {% if messages %}
+    <div class="mb-4">
+        {% for message in messages %}
+            <div class="bg-{{ message.tags }}-100 border border-{{ message.tags }}-400 text-{{ message.tags }}-700 px-4 py-3 rounded relative" role="alert">
+                <span class="block sm:inline">{{ message }}</span>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if orders %}
+        {% for order in orders %}
+            <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <h2 class="text-2xl font-bold mb-2">Pedido #{{ order.id }}</h2>
+                <p class="text-gray-700 mb-2"><strong>Estado:</strong> {{ order.get_status_display }}</p>
+                <p class="text-gray-700 mb-2"><strong>Fecha:</strong> {{ order.created_at|date:"F d, Y" }}</p>
+                
+                <h3 class="text-xl font-bold mt-4 mb-2">Productos:</h3>
+                <ul class="list-disc pl-5">
+                    {% for item in order.items.all %}
+                        <li>{{ item.product.name }} - Cantidad: {{ item.quantity }} - Precio: ${{ item.price }}</li>
+                    {% endfor %}
+                </ul>
+                
+                {% if order.status == 'pending' %}
+                    <form method="post" action="{% url 'cancel_order' order.id %}" class="mt-4">
+                        {% csrf_token %}
+                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                            Cancelar Pedido
+                        </button>
+                    </form>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-gray-700">No has realizado ningún pedido aún.</p>
+    {% endif %}
+</div>
+{% endblock %}

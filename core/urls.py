@@ -29,6 +29,8 @@ urlpatterns = [
     path('users/', include('users.urls')),
     # inventory app
     path('inventory/', include('inventory.urls')),
+    # orders app
+    path('orders/', include('orders.urls')),
     # browser reload
     path('__reload__/', include('django_browser_reload.urls'))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

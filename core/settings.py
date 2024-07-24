@@ -41,11 +41,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.template.defaultfilters',
     # third party apps
     'django_browser_reload',
     # my apps
     'users',
     'inventory',
+    'orders',
     # django Seed
     'django_seed',
 ]

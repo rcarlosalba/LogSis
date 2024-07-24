@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load order_tags %}
+
+{% block content %}
+<div class="container mx-auto px-4">
+    <h1 class="text-3xl font-bold mb-6">Tu Carrito</h1>
+
+    {% if messages %}
+    <div class="mb-4">
+        {% for message in messages %}
+            <div class="bg-{{ message.tags }}-100 border border-{{ message.tags }}-400 text-{{ message.tags }}-700 px-4 py-3 rounded relative" role="alert">
+                <span class="block sm:inline">{{ message }}</span>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if cart.items.all %}
+        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <table class="w-full">
+                <thead>
+                    <tr>
+                        <th class="text-left">Producto</th>
+                        <th class="text-left">Precio</th>
+                        <th class="text-left">Cantidad</th>
+                        <th class="text-left">Subtotal</th>
+                        <th class="text-left">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart.items.all %}
+                        <tr>
+                            <td>{{ item.product.name }}</td>
+                            <td>${{ item.product.price|floatformat:2 }}</td>
+                            <td>
+                                <form method="post" class="inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="item_id" value="{{ item.id }}">
+                                    <button type="submit" name="action" value="decrease" class="bg-gray-300 text-gray-800 font-bold py-1 px-2 rounded-l">-</button>
+                                    <input type="number" name="action" value="{{ item.quantity }}" min="1" max="99" class="w-12 text-center">
+                                    <button type="submit" name="action" value="increase" class="bg-gray-300 text-gray-800 font-bold py-1 px-2 rounded-r">+</button>
+                                </form>
+                            </td>
+                            <td>${{ item.product.price|mul:item.quantity|floatformat:2 }}</td>
+                            <td>
+                                <form method="post" class="inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="item_id" value="{{ item.id }}">
+                                    <button type="submit" name="action" value="remove" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-right font-bold">Total:</td>
+                        <td colspan="2" class="font-bold">${{ cart.total|floatformat:2 }}</td>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="mt-6">
+                <a href="{% url 'checkout' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Proceder al Checkout
+                </a>
+            </div>
+        </div>
+    {% else %}
+        <p class="text-gray-700">Tu carrito está vacío.</p>
+    {% endif %}
+</div>
+{% endblock %}

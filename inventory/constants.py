@@ -6,7 +6,7 @@ PRODUCT_CATEGORIES = (
 )
 
 ORDER_STATUS = (
-    ('PENDING', 'Pendiente'),
+    ('pending', 'Pendiente'),
     ('paid', 'Pagado'),
     ('cancelled', 'Cancelado'),
 )

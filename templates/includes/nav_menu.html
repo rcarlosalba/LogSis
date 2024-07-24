@@ -31,10 +31,13 @@
             {% endif %}
             
             {% if user.user_type == 'customer' %}
-              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Mis Pedidos</a>
+              <a href="{% url 'my_orders' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Mis Pedidos</a>
+            {% endif %}
+
+            {% if user.user_type == 'customer' %}
+              <a href="{% url 'view_cart' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Carrito</a>
             {% endif %}
             
-            <a href="" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Perfil</a>
             <a href="{% url 'logout' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Cerrar Sesión</a>
           {% else %}
             <a href="{% url 'login' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Iniciar Sesión</a>
@@ -83,7 +86,11 @@
         {% endif %}
         
         {% if user.user_type == 'customer' %}
-          <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Mis Pedidos</a>
+          <a href="{% url 'my_orders' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Mis Pedidos</a>
+        {% endif %}
+
+        {% if user.user_type == 'customer' %}
+          <a href="{% url 'view_cart' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Carrito</a>
         {% endif %}
         
         <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Perfil</a>

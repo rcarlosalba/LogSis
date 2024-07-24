@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load order_tags %}
+
+{% block content %}
+<div class="container mx-auto px-4">
+    <h1 class="text-3xl font-bold mb-6">Confirmación de Pedido</h1>
+
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h2 class="text-2xl font-bold mb-4">Pedido #{{ order.id }}</h2>
+        <p class="mb-4">Tu pedido ha sido creado exitosamente. Por favor, sigue estas instrucciones para completar tu pago:</p>
+        
+        <ol class="list-decimal list-inside mb-4">
+            <li>Realiza un depósito bancario a la cuenta XXXX en el banco XXX.</li>
+            <li>Envía la boleta de depósito a XXXX (correo electrónico o número de WhatsApp).</li>
+            <li>Incluye tu número de pedido (#{{ order.id }}) en el mensaje.</li>
+        </ol>
+
+        <p class="font-bold mb-4">Tienes hasta el {{ order.expiration_date|date:"F d, Y H:i" }} para realizar el pago, o tu orden será automáticamente cancelada.</p>
+
+        <h3 class="text-xl font-bold mt-4 mb-2">Resumen del Pedido:</h3>
+        <ul class="mb-4">
+            {% for item in order.items.all %}
+                <li class="mb-2">
+                    {{ item.product.name }} - Cantidad: {{ item.quantity }} - 
+                    Precio unitario: ${{ item.price|floatformat:2 }} - 
+                    Subtotal: ${{ item.total|floatformat:2 }}
+                </li>
+            {% endfor %}
+        </ul>
+        <p class="font-bold">Total: ${{ order.total|floatformat:2 }}</p>
+    </div>
+</div>
+{% endblock %}

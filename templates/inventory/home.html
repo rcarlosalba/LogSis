@@ -1,8 +1,7 @@
-<!-- inventory/templates/inventory/home.html -->
 {% extends 'base.html' %}
 {% block content %}
 <h1 class="text-3xl font-bold mb-6">Nuestros Productos</h1>
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-4">
     {% for product in products %}
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
         <div class="h-48 overflow-hidden">
@@ -25,4 +24,27 @@
     </div>
     {% endfor %}
 </div>
+
+<!-- Paginación -->
+{% if is_paginated %}
+<div class="mt-4 flex justify-center">
+    <nav class="inline-flex rounded-md shadow mb-4">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50">
+                Anterior
+            </a>
+        {% endif %}
+        
+        <span class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border-t border-b border-gray-300">
+            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+        </span>
+        
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50">
+                Siguiente
+            </a>
+        {% endif %}
+    </nav>
+</div>
+{% endif %}
 {% endblock %}

@@ -1,32 +1,72 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container mx-auto px-4">
+<div class="container mx-auto px-4 py-8">
     <h1 class="text-3xl font-bold mb-6">Detalle del Producto</h1>
-    
-    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        {% if product.imagen %}
-            <img src="{{ product.imagen.url }}" alt="{{ product.name }}" class="mb-4 max-w-full h-auto">
-        {% elif product.imagen_url %}
-            <img src="{{ product.imagen_url }}" alt="{{ product.name }}" class="mb-4 max-w-full h-auto">
-        {% else %}
-            <p class="text-gray-600 mb-4">No hay imagen disponible</p>
-        {% endif %}
-        
-        <h2 class="text-2xl font-bold mb-2">{{ product.name }}</h2>
-        <p class="text-gray-700 mb-2"><strong>Descripción:</strong> {{ product.description }}</p>
-        <p class="text-gray-700 mb-2"><strong>Precio:</strong> ${{ product.price }}</p>
-        <p class="text-gray-700 mb-2"><strong>Cantidad:</strong> {{ product.quantity }}</p>
-        <p class="text-gray-700 mb-2"><strong>Categoría:</strong> {{ product.category }}</p>
-        <p class="text-gray-700 mb-2"><strong>SKU:</strong> {{ product.sku }}</p>
-        
-        <div class="mt-6">
-            {% if user.is_authenticated and user.user_type in 'owner,admin,seller' %}
-                <a href="{% url 'inventory:product_update' product.pk %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Editar</a>
-                <a href="{% url 'inventory:product_list' %}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Volver al inventario</a>
-            {% else %}
-                <a href="{% url 'home' %}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Volver al inicio</a>
-            {% endif %}
+   
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden mb-8">
+        <div class="md:flex">
+            <div class="md:flex-shrink-0">
+                {% if product.imagen %}
+                    <img src="{{ product.imagen.url }}" alt="{{ product.name }}" class="h-48 w-full object-cover md:w-48">
+                {% elif product.imagen_url %}
+                    <img src="{{ product.imagen_url }}" alt="{{ product.name }}" class="h-48 w-full object-cover md:w-48">
+                {% else %}
+                    <div class="h-48 w-full md:w-48 bg-gray-200 flex items-center justify-center">
+                        <span class="text-gray-500">Sin imagen</span>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">{{ product.name }}</h2>
+                <p class="text-gray-700 mb-4">{{ product.description }}</p>
+                <p class="text-gray-900 font-bold text-xl mb-2">${{ product.price }}</p>
+                <p class="text-gray-700 mb-2"><span class="font-semibold">Cantidad:</span> {{ product.quantity }}</p>
+                <p class="text-gray-700 mb-4"><span class="font-semibold">Categoría:</span> {{ product.get_category_display }}</p>
+                
+                <div class="mt-4 flex space-x-2">
+                    {% if user.is_authenticated and user.user_type == 'customer' %}
+                        <form method="post" action="{% url 'inventory:product_detail' product.pk %}" class="inline">
+                            {% csrf_token %}
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110">
+                                Agregar al Carrito
+                            </button>
+                        </form>
+                    {% endif %}
+                    {% if user.is_authenticated and user.user_type in 'owner,admin,seller' %}
+                        <a href="{% url 'inventory:product_update' product.pk %}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110">Editar</a>
+                        <a href="{% url 'inventory:product_list' %}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out">Volver al inventario</a>
+                    {% else %}
+                        <a href="{% url 'home' %}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out">Volver al inicio</a>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
+
+    {% if related_products %}
+    <div class="mt-12">
+        <h2 class="text-2xl font-bold mb-6">Productos Relacionados</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {% for related_product in related_products %}
+            <div class="bg-white shadow-md rounded-lg overflow-hidden transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-xl">
+                {% if related_product.imagen %}
+                    <img src="{{ related_product.imagen.url }}" alt="{{ related_product.name }}" class="w-full h-48 object-cover">
+                {% elif related_product.imagen_url %}
+                    <img src="{{ related_product.imagen_url }}" alt="{{ related_product.name }}" class="w-full h-48 object-cover">
+                {% else %}
+                    <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                        <span class="text-gray-500">Sin imagen</span>
+                    </div>
+                {% endif %}
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ related_product.name }}</h3>
+                    <p class="text-gray-700 font-bold mb-2">${{ related_product.price }}</p>
+                    <a href="{% url 'inventory:product_detail' related_product.pk %}" class="block text-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out">Ver Detalle</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load order_tags %}
+
+{% block content %}
+<div class="container mx-auto px-4">
+    <h1 class="text-3xl font-bold mb-6">Checkout</h1>
+
+    {% if messages %}
+    <div class="mb-4">
+        {% for message in messages %}
+            <div class="bg-{{ message.tags }}-100 border border-{{ message.tags }}-400 text-{{ message.tags }}-700 px-4 py-3 rounded relative" role="alert">
+                <span class="block sm:inline">{{ message }}</span>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h2 class="text-2xl font-bold mb-4">Resumen del Pedido</h2>
+        <ul class="mb-4">
+            {% for item in cart.items.all %}
+                <li class="mb-2">
+                    {{ item.product.name }} - Cantidad: {{ item.quantity }} - 
+                    Precio unitario: ${{ item.product.price }} - 
+                    Subtotal: ${{ item.product.price|mul:item.quantity|floatformat:2 }}
+                </li>
+            {% endfor %}
+        </ul>
+        <p class="font-bold">Total: ${{ cart.total }}</p>
+
+        <form method="post" class="mt-6">
+            {% csrf_token %}
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Completar Pedido
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
